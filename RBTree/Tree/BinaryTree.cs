@@ -114,7 +114,6 @@ namespace RBTree.Tree
                         {
                             Node temp = current.left; // find the last right value for the branch on the left 
                             Node prevTemp = null;
-                            //current = current.left;
 
                             while (temp.right != null)
                             {
@@ -139,14 +138,6 @@ namespace RBTree.Tree
                         {
                             prev.right = current.right;
                         }
-                        //if (current.left != null)
-                        //{
-                        //    current.left.right = current.right;
-                        //    prev.right = current.left;
-                        //} else
-                        //{
-                        //    prev.right = current.right;
-                        //}
                     } 
                     else
                     {
@@ -179,15 +170,6 @@ namespace RBTree.Tree
                         {
                             prev.left = current.left;
                         }
-                        //if (current.right != null)
-                        //{
-                        //    current.right.left = current.left;
-                        //    prev.left = current.right;
-                        //}
-                        //else
-                        //{
-                        //    prev.left = current.left;
-                        //}
                     }
 
                 }
@@ -206,36 +188,53 @@ namespace RBTree.Tree
 
         public void ConsoleWrite()
         {
-            Tree(root);
+            TreeOne(root,0, true);
         }
 
-        public void Tree(Node current)
+        private void TreeOne (Node cur, int lvl, bool thisstring)
         {
-            //if (current == null)
-            //    return;
-            //int tempcount = level;
-            //while (tempcount > 0)
-            //{
-            //    Console.Write("\t");
-            //    tempcount--;
-            //}
-            //Console.Write("->");
-            //Console.Write(current.value);
-            //if (current == root)
-            //{
-            //    Tree(current.left, level + 1);
-            //}
-            //else
-            //    Tree(current.left, level);
-            //Console.WriteLine();
-            //Tree(current.right, level+1);
-
-            if (current == null)
+            if (cur == null) // end of the branch 
+            {
+                Console.Write("\t");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("->");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("null");
                 return;
-            Console.WriteLine(current.value);
-            Tree(current.left);
+            }
+            if (cur != root)
+            {
+                if (!thisstring) // move to the next string 
+                {
+                    int tempcount = lvl;
+                    while (tempcount > 0)
+                    {
+                        Console.Write("\t");
+                        tempcount--;
+                    }
 
-            Tree(current.right);
+                }
+                else // keep writing in this string 
+                    Console.Write("\t");
+            }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("->");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(cur.value);
+
+            if (cur == root) // with left branch always keep in this string 
+            {
+                TreeOne(cur.left, lvl + 1, true);
+            }
+            else
+                TreeOne(cur.left, lvl+1, true);
+
+            if (cur.right != null)
+            {
+                Console.WriteLine();
+                TreeOne(cur.right, lvl + 1, false); //with right branch always move to the next string
+            }
+
 
         }
     }
