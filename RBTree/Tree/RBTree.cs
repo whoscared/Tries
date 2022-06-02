@@ -346,6 +346,56 @@ namespace RBTree.Tree
             return FixUp(node);
         }
 
+        public void ConsoleWrite()
+        {
+            TreeOne(root, 0, true);
+        }
+
+        private void TreeOne(Node cur, int lvl, bool thisstring)
+        {
+            if (cur == null) // end of the branch 
+            {
+                Console.Write("\t");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("->");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("null");
+                return;
+            }
+            if (cur != root)
+            {
+                if (!thisstring) // move to the next string 
+                {
+                    int tempcount = lvl;
+                    while (tempcount > 0)
+                    {
+                        Console.Write("\t");
+                        tempcount--;
+                    }
+
+                }
+                else // keep writing in this string 
+                    Console.Write("\t");
+            }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("->");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(cur.key + "/" + cur.value);
+
+            if (cur == root) // with left branch always keep in this string 
+            {
+                TreeOne(cur.left, lvl + 1, true);
+            }
+            else
+                TreeOne(cur.left, lvl + 1, true);
+
+            if (cur.right != null)
+            {
+                Console.WriteLine();
+                TreeOne(cur.right, lvl + 1, false); //with right branch always move to the next string
+            }
+        }
+
         public class Node
         {
             public int key;
